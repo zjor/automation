@@ -1,10 +1,8 @@
 name: Send quote of the day
 
 on:
-  push:
-    branches: [ master ]
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: 13 08 * * *
 
 env:
   TG_USER: ${{secrets.TG_USER}}
