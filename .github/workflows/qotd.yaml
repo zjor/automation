@@ -1,0 +1,17 @@
+name: Send quote of the day
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: 50 * * * *
+
+env:
+  TG_USER: ${{secrets.TG_USER}}
+  TG_PASS: ${{secrets.TG_PASS}}
+
+jobs:
+  send-qotd:
+    runs-on: ubuntu-latest
+      - uses: actions/checkout@v3
+      - run: python send_qotd.py
