@@ -13,5 +13,6 @@ env:
 jobs:
   send-qotd:
     runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v3
       - run: python send_qotd.py
