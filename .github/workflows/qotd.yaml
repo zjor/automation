@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
   schedule:
-    - cron: '*/2 * * * *'
+    - cron: '*/5 * * * *'
 
 env:
   TG_USER: ${{secrets.TG_USER}}
