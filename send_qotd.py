@@ -18,12 +18,13 @@ def send_message(message):
 
     topic = "qotd"
 
-    data = {
+    json = {
         "topic": topic,
         "payload": message
     }
 
-    return req.post(url, auth=(login, password), data=json.dumps(data))
+    res = req.post(url, auth=(login, password), json=json)
+    return res.status_code, res.json()
 
 
 if __name__ == "__main__":
