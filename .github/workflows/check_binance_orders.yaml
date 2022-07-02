@@ -17,7 +17,7 @@ jobs:
 
       - uses: actions/cache@v3
         with:
-          name: previous-orders
-          path: /var/tmp/binance_orders.json
+          key: binance_orders.json
+          path: /var/tmp/
 
       - run: python check_binance_orders.py
