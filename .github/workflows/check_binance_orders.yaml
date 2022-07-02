@@ -2,7 +2,7 @@ name: Check Binance order updates and notify of changes
 
 on:
   schedule:
-    - cron: */20 * * * *
+    - cron: "*/20 * * * *"
 
 env:
   TG_USER: ${{secrets.TG_USER}}
