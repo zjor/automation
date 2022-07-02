@@ -1,6 +1,6 @@
 name: Check Binance order updates and notify of changes
 
-on:
+on: [push]
 
 env:
   TG_USER: ${{secrets.TG_USER}}
