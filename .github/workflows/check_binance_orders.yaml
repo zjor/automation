@@ -22,6 +22,6 @@ jobs:
       - run: python check_binance_orders.py
 
       - uses: actions/upload-artifact@v2
-          with:
-            name: previous-orders
-            path: /var/tmp/binance_orders.json
+        with:
+          name: previous-orders
+          path: /var/tmp/binance_orders.json
