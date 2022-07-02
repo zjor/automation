@@ -56,8 +56,12 @@ class OrderNotifier:
             get_key=lambda o: o[OrderNotifier.ORDER_ID_KEY])
 
     def load_prev_state(self):
-        with open(self.storage_filename, 'r') as f:
-            self.prev_state = json.load(f)
+        if os.path.exists(self.storage_filename):
+            with open(self.storage_filename, 'r') as f:
+                self.prev_state = json.load(f)
+            return True
+        else:
+            return False
 
     def store_open_orders(self):
         assert self.open_orders, "open_orders == None"
@@ -98,6 +102,8 @@ if __name__ == "__main__":
 
     app = OrderNotifier(key, secret)
     app.fetch_open_orders()
-    app.load_prev_state()
-    app.handle_order_changes()
+    if app.load_prev_state():
+        app.handle_order_changes()
+    else:
+        logging.warning("Previous order state does not exist")
     app.store_open_orders()

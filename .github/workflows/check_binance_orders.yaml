@@ -1,0 +1,27 @@
+name: Check Binance order updates and notify of changes
+
+on:
+
+env:
+  TG_USER: ${{secrets.TG_USER}}
+  TG_PASS: ${{secrets.TG_PASS}}
+  BINANCE_API_KEY: ${{secrets.BINANCE_API_KEY}}
+  BINANCE_SECRET: ${{secrets.BINANCE_SECRET}}
+
+jobs:
+  check-binance-orders:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: pip install -r requirements.txt
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: previous-orders
+
+      - run: python check_binance_orders.py
+
+      - uses: actions/upload-artifact@v2
+          with:
+            name: previous-orders
+            path: /var/tmp/binance_orders.json
