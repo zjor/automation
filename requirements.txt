@@ -1,0 +1,2 @@
+requests==2.28.1
+binance-connector==1.13.0
