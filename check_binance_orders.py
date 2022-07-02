@@ -44,7 +44,7 @@ def fmt_missing_order(original, current):
 class OrderNotifier:
     ORDER_ID_KEY = 'clientOrderId'
 
-    def __init__(self, api_key, secret, storage_filename='/var/tmp/binance_orders.json'):
+    def __init__(self, api_key, secret, storage_filename='./.cache/binance_orders.json'):
         self.open_orders: dict[str, object] = None
         self.prev_state: dict[str, object] = None
         self.client = Spot(key=api_key, secret=secret)
