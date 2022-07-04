@@ -110,7 +110,9 @@ def check_orders_job():
 
 
 if __name__ == "__main__":
+    send_message(f"Deployed version: {os.getenv('VCS_REF')}")
     logging.info("Checking order changes on Binance")
+    check_orders_job()
 
     scheduler = BlockingScheduler()
     scheduler.add_job(check_orders_job, 'interval', minutes=5)
