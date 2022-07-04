@@ -6,6 +6,8 @@ from binance.spot import Spot
 
 import bot_sender
 
+from apscheduler.schedulers.background import BlockingScheduler
+
 logging.basicConfig(level=logging.INFO)
 
 
@@ -44,7 +46,7 @@ def fmt_missing_order(original, current):
 class OrderNotifier:
     ORDER_ID_KEY = 'clientOrderId'
 
-    def __init__(self, api_key, secret, storage_filename='./.cache/binance_orders.json'):
+    def __init__(self, api_key, secret, storage_filename='/var/tmp/binance_orders.json'):
         self.open_orders: dict[str, object] = None
         self.prev_state: dict[str, object] = None
         self.client = Spot(key=api_key, secret=secret)
@@ -95,9 +97,7 @@ class OrderNotifier:
                 send_message(f"`{message}`")
 
 
-if __name__ == "__main__":
-    logging.info("Checking order changes on Binance")
-
+def check_orders_job():
     key, secret = os.getenv('BINANCE_API_KEY'), os.getenv('BINANCE_SECRET')
 
     app = OrderNotifier(key, secret)
@@ -107,3 +107,11 @@ if __name__ == "__main__":
     else:
         logging.warning("Previous order state does not exist")
     app.store_open_orders()
+
+
+if __name__ == "__main__":
+    logging.info("Checking order changes on Binance")
+
+    scheduler = BlockingScheduler()
+    scheduler.add_job(check_orders_job, 'interval', seconds=10)
+    scheduler.start()
