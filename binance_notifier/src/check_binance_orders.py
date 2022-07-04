@@ -113,5 +113,5 @@ if __name__ == "__main__":
     logging.info("Checking order changes on Binance")
 
     scheduler = BlockingScheduler()
-    scheduler.add_job(check_orders_job, 'interval', seconds=10)
+    scheduler.add_job(check_orders_job, 'interval', minutes=5)
     scheduler.start()

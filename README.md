@@ -9,5 +9,3 @@ Contains scheduled scripts invoked with GitHub Actions
 - [source](./send_qotd.py)
 
 ### Check spot orders on Binance
-- [workflow](./.github/workflows/check_binance_orders.yaml)
-- [source](./check_binance_orders.py) 

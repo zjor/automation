@@ -1,0 +1,6 @@
+replicaCount: 1
+
+app: binance-notifier
+image: zjor/binance-notifier
+version:
+

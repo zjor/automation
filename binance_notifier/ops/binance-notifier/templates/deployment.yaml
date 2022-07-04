@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.app }}
+  name: {{ .Values.app }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - image: "{{ .Values.image }}:{{ .Values.version }}"
+          imagePullPolicy: Always
+          name: {{ .Values.app }}
+          env:
+            - name: TG_USER
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: TG_USER
+                  optional: false
+            - name: TG_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: TG_PASS
+                  optional: false
+            - name: BINANCE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: BINANCE_API_KEY
+                  optional: false
+            - name: BINANCE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: BINANCE_SECRET
+                  optional: false
+            - name: VCS_REF
+              value: {{ .Values.version }}
