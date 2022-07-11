@@ -13,7 +13,6 @@ function showNotification(title, message) {
 }
 
 function main() {
-    log(config.get('mqtt'))
     const client = mqtt.connect({...config.get('mqtt')})
     const {userId: tgUserId} = config.get('telegram')
     const topic = 'toggle/101'
