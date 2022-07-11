@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/zjor/automation#readme",
   "dependencies": {
+    "config": "^3.3.7",
+    "mqtt": "^4.3.7",
     "node-notifier": "^10.0.1"
   }
 }

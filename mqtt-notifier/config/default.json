@@ -1,0 +1,12 @@
+{
+  "mqtt": {
+    "host": "...hivemq.cloud",
+    "port": 8883,
+    "protocol": "mqtts",
+    "username": "...",
+    "password": "..."
+  },
+  "telegram": {
+    "userId": "1234567"
+  }
+}
