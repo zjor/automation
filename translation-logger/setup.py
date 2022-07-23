@@ -22,7 +22,7 @@ setuptools.setup(
     python_requires=">=3.6",
     entry_points={
         "console_scripts": [
-            "rutrans = downloader.cli:main",
+            "rutrans = rutrans.cli:main",
         ]
     }
 )
