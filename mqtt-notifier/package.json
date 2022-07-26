@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Listens to MQTT and performs different actions",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,6 +23,7 @@
   "homepage": "https://github.com/zjor/automation#readme",
   "dependencies": {
     "config": "^3.3.7",
+    "got": "^12.2.0",
     "mqtt": "^4.3.7",
     "node-notifier": "^10.0.1"
   }

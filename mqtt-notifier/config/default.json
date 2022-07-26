@@ -8,5 +8,8 @@
   },
   "telegram": {
     "userId": "1234567"
+  },
+  "toggl": {
+    "token": "..."
   }
 }
