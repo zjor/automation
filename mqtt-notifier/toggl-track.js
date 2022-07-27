@@ -14,15 +14,15 @@ const options = {
     }
 }
 
-async function me() {
+export async function me() {
     return got.get(`${baseUrl}/me`, {...options})
 }
 
-async function getCurrentTimeEntry() {
+export async function getCurrentTimeEntry() {
     return got.get(`${baseUrl}/me/time_entries/current`, {...options})
 }
 
-async function startTimeTracking(workspaceId, projectId, description) {
+export async function startTimeTracking(workspaceId, projectId, description) {
     const now = new Date().toISOString()
     const json = {
         "created_with": "nodeJS",
@@ -40,7 +40,7 @@ async function startTimeTracking(workspaceId, projectId, description) {
     return got.post(`${baseUrl}/workspaces/${workspaceId}/time_entries`, {...options, json})
 }
 
-async function stopTimeTracking() {
+export async function stopTimeTracking() {
     const current = JSON.parse((await getCurrentTimeEntry()).body)
     if (!current) {
         console.log("No running tasks")
@@ -82,4 +82,4 @@ async function main() {
     }
 }
 
-main().catch(console.log)
+// main().catch(console.log)
