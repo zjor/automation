@@ -1,4 +1,5 @@
 .idea
 node_modules
+sandbox.*
 
 config/local.json

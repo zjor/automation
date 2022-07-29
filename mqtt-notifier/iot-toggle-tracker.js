@@ -1,6 +1,8 @@
 import mqtt from 'mqtt'
 import config from 'config'
-import {me, startTimeTracking, stopTimeTracking} from './toggl-track.js'
+import {me, startTimeTracking, stopTimeTracking} from './toggl-track-client.js'
+
+import Toggl from 'toggl-track';
 
 const log = console.log
 
@@ -40,4 +42,18 @@ async function main() {
     client.on('message', (_t, m) => handleMqttMessage(m.toString()))
 }
 
-main().catch(log)
+// main().catch(log)
+
+async function main2() {
+
+    const {token} = config.get('toggl');
+    log(new Toggl())
+
+    // const toggl = new Toggl({
+    //     auth: {token}
+    // });
+    // const entries = await toggl.timeEntry.list();
+    // console.log(entires);
+}
+
+main2()
