@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Listens to MQTT and performs different actions",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node iot-toggle-tracker.js",
     "sandbox": "tsc sandbox.ts && node sandbox.js"
@@ -25,7 +26,6 @@
     "config": "^3.3.7",
     "got": "^12.2.0",
     "mqtt": "^4.3.7",
-    "node-notifier": "^10.0.1",
-    "toggl-track": "^0.7.1"
+    "node-notifier": "^10.0.1"
   }
 }
