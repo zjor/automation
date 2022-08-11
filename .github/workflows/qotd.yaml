@@ -14,3 +14,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: python send_qotd.py
+
+  send-potd:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Send picture of the day
+        run: python send_potd.py
