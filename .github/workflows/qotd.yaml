@@ -1,9 +1,6 @@
 name: Send quote of the day
 
 on:
-  push:
-    branches:
-      - master
   schedule:
     - cron: 13 08 * * *
 
