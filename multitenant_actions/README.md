@@ -7,3 +7,11 @@ An action is defined by the following fields:
 - schedule
 - action
 - is_enabled
+
+## How to run
+
+From the directory above:
+
+```bash
+$> python -m multitenant_actions.main
+```

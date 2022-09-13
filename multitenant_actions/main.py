@@ -7,6 +7,7 @@ from apscheduler.schedulers.background import BlockingScheduler
 
 from multitenant_actions.bot_sender import BotSender
 from multitenant_actions.actions.send_qotd import send_qotd_action
+from multitenant_actions.actions.send_potd import send_potd_action
 
 logging.basicConfig(level=logging.INFO)
 
@@ -47,6 +48,8 @@ def build_action_func(login: str, password: str, topic: str, action: str):
     bot = BotSender(login, password)
     if action == 'QOTD':
         return lambda: send_qotd_action(bot, topic)
+    elif action == 'POTD':
+        return lambda: send_potd_action(bot, topic)
     else:
         return lambda: bot.send_message(topic, f'Unknown action: {action}')
 

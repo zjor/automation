@@ -1,7 +1,12 @@
+import logging
 import tempfile
 import requests
 from datetime import datetime
 from PIL import Image
+
+from multitenant_actions.bot_sender import BotSender
+
+logging.basicConfig(level=logging.INFO)
 
 base_url = "https://en.wikipedia.org/w/api.php"
 
@@ -69,13 +74,16 @@ def resize_image(filename, width):
     return resized_filename
 
 
-if __name__ == "__main__":
-    from bot_sender import send_image
-
+def send_potd_action(sender: BotSender, topic: str):
     filename = fetch_picture_of_the_day()
+    logging.info(f"Fetched image of the day: {filename}")
+
     image_url = fetch_image_url(filename)
+    logging.info(f"Fetched image URL: {image_url}")
+
     temp_file = download_image(image_url)
+    logging.info(f"Downloaded image to {temp_file}")
 
     resized_filename = resize_image(temp_file, 600)
 
-    send_image('qotd', resized_filename)
+    sender.send_image(topic, resized_filename)
