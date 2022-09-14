@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node iot-toggle-tracker.js",
-    "sandbox": "tsc sandbox.ts && node sandbox.js"
+    "sandbox": "node sandbox.js"
   },
   "repository": {
     "type": "git",

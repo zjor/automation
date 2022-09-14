@@ -35,6 +35,8 @@ export async function startTimeTracking(workspaceId, projectId, description) {
         start,
         "at": start,
     }
+    log(`Payload: ${JSON.stringify(json)}`)
+
     return got.post(`${baseUrl}/workspaces/${workspaceId}/time_entries`, {...options, json})
 }
 
@@ -62,22 +64,3 @@ export async function stopTimeTracking() {
 
     return got.put(`${baseUrl}/workspaces/${workspaceId}/time_entries/${id}`, {...options, json})
 }
-
-async function main() {
-    try {
-        const workspaceId = 224075;
-        const projectId = 163308321;
-        const createTaskResponse = await startTimeTracking(workspaceId, projectId, "Hello from NodeJS")
-        console.log(createTaskResponse.body)
-        const response = await getCurrentTimeEntry()
-        console.log(response.statusCode)
-        console.log(response.body)
-
-        // const stopResponse = await stopTimeTracking()
-        // log(`HTTP code: ${stopResponse?.statusCode}`)
-    } catch (e) {
-        console.error(`Error: ${e}: ${e?.response?.body || ''}`)
-    }
-}
-
-// main().catch(console.log)
