@@ -12,7 +12,12 @@ const projectIds = {
 
 async function switchTask(projectId, description) {
     await stopTimeTracking()
-    await startTimeTracking(workspaceId, projectId, description)
+    try {
+        const response = await startTimeTracking(workspaceId, projectId, description)
+        log(response.body)
+    } catch (e) {
+        log(e)
+    }
 }
 
 async function handleMqttMessage(message) {

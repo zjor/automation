@@ -23,19 +23,17 @@ export async function getCurrentTimeEntry() {
 }
 
 export async function startTimeTracking(workspaceId, projectId, description) {
-    const now = new Date().toISOString()
+    const now = new Date()
+    const start = now.toISOString()
     const json = {
         "created_with": "nodeJS",
+        "duration": -1 * (Math.floor(now.getTime() / 1000)),
         "pid": projectId,
-        "tid": null,
         description,
         "tags": [],
-        "billable": false,
-        "duration": -1658844435,
         "wid": workspaceId,
-        "start": now,
-        "stop": null,
-        "at": now
+        start,
+        "at": start,
     }
     return got.post(`${baseUrl}/workspaces/${workspaceId}/time_entries`, {...options, json})
 }
@@ -75,10 +73,10 @@ async function main() {
         console.log(response.statusCode)
         console.log(response.body)
 
-        const stopResponse = await stopTimeTracking()
-        log(`HTTP code: ${stopResponse.statusCode}`)
+        // const stopResponse = await stopTimeTracking()
+        // log(`HTTP code: ${stopResponse?.statusCode}`)
     } catch (e) {
-        console.error(`Error: ${e.response.body}`)
+        console.error(`Error: ${e}: ${e?.response?.body || ''}`)
     }
 }
 
