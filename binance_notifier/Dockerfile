@@ -1,9 +1,14 @@
-FROM python:3.9
+FROM python:3.11
 
-ADD requirements.txt .
+RUN pip install poetry
 
-RUN pip install -r requirements.txt
+WORKDIR /code
 
-ADD src/*.py .
+COPY poetry.lock pyproject.toml ./
 
-CMD ["python", "check_binance_orders.py"]
+RUN poetry config virtualenvs.create false
+RUN poetry install --only main --no-root
+
+COPY src /code
+
+CMD ["python", "-m", "my_binance.order_change_monitor"]
