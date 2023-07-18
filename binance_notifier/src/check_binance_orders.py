@@ -2,7 +2,7 @@ import json
 import os
 import logging
 
-from binance.spot import Spot
+from binance import Client
 
 import bot_sender
 
@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 def send_message(message):
-    return bot_sender.send_message('binance', message)
+    return bot_sender.send_message("binance", message)
 
 
 def as_dict(items, get_key):
@@ -23,43 +23,41 @@ def as_dict(items, get_key):
 
 
 def fmt_new_order(o):
-    status = o['status']
-    _type = o['type']
-    side = o['side']
-    symbol = o['symbol']
-    amount = float(o['origQty'])
-    price = float(o['price'])
+    status = o["status"]
+    _type = o["type"]
+    side = o["side"]
+    symbol = o["symbol"]
+    amount = float(o["origQty"])
+    price = float(o["price"])
     return f"{status} {_type} {side} {symbol} {amount:.4f} {price:.4f}"
 
 
 def fmt_missing_order(original, current):
-    new_status = current['status']
-    old_status = original['status']
-    _type = original['type']
-    side = original['side']
-    symbol = original['symbol']
-    amount = float(original['origQty'])
-    price = float(original['price'])
+    new_status = current["status"]
+    old_status = original["status"]
+    _type = original["type"]
+    side = original["side"]
+    symbol = original["symbol"]
+    amount = float(original["origQty"])
+    price = float(original["price"])
     return f"{old_status} -> {new_status} {_type} {side} {symbol} {amount:.4f} {price:.4f}"
 
 
 class OrderNotifier:
-    ORDER_ID_KEY = 'clientOrderId'
+    ORDER_ID_KEY = "clientOrderId"
 
-    def __init__(self, api_key, secret, storage_filename='/var/tmp/binance_orders.json'):
+    def __init__(self, api_key, api_secret, storage_filename):
         self.open_orders: dict[str, object] = None
         self.prev_state: dict[str, object] = None
-        self.client = Spot(key=api_key, secret=secret)
+        self.client = Spot(key=api_key, secret=api_secret)
         self.storage_filename = storage_filename
 
     def fetch_open_orders(self):
-        self.open_orders = as_dict(
-            self.client.get_open_orders(),
-            get_key=lambda o: o[OrderNotifier.ORDER_ID_KEY])
+        self.open_orders = as_dict(self.client.get_open_orders(), get_key=lambda o: o[OrderNotifier.ORDER_ID_KEY])
 
     def load_prev_state(self):
         if os.path.exists(self.storage_filename):
-            with open(self.storage_filename, 'r') as f:
+            with open(self.storage_filename, "r") as f:
                 self.prev_state = json.load(f)
             return True
         else:
@@ -68,7 +66,7 @@ class OrderNotifier:
     def store_open_orders(self):
         assert self.open_orders, "open_orders == None"
 
-        with open(self.storage_filename, 'w') as f:
+        with open(self.storage_filename, "w") as f:
             f.write(json.dumps(self.open_orders, indent=4, sort_keys=True))
 
     def handle_order_changes(self):
@@ -81,7 +79,7 @@ class OrderNotifier:
         else:
             for missing_id in missing_ids:
                 missing_order = self.prev_state[missing_id]
-                current_order_state = self.client.get_order(missing_order['symbol'], orderId=missing_order['orderId'])
+                current_order_state = self.client.get_order(missing_order["symbol"], orderId=missing_order["orderId"])
                 message = fmt_missing_order(missing_order, current_order_state)
                 logging.info(message)
                 send_message(f"`{message}`")
@@ -98,7 +96,7 @@ class OrderNotifier:
 
 
 def check_orders_job():
-    key, secret = os.getenv('BINANCE_API_KEY'), os.getenv('BINANCE_SECRET')
+    key, secret = os.getenv("BINANCE_API_KEY"), os.getenv("BINANCE_SECRET")
 
     app = OrderNotifier(key, secret)
     app.fetch_open_orders()
@@ -115,5 +113,5 @@ if __name__ == "__main__":
     check_orders_job()
 
     scheduler = BlockingScheduler()
-    scheduler.add_job(check_orders_job, 'interval', minutes=5)
+    scheduler.add_job(check_orders_job, "interval", minutes=5)
     scheduler.start()

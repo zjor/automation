@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "binance-notifier"
+version = "0.1.0"
+description = ""
+authors = ["Sergey Royz <zjor.se@gmail.com>"]
+readme = "README.md"
+packages = [{include = "binance_notifier"}]
+
+[tool.poetry.dependencies]
+python = "^3.11.4"
+apscheduler = "^3.10.1"
+requests = "^2.31.0"
+python-binance = "^1.0.17"
+pydantic = "^2.0.3"
+black = "^23.7.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+color = 1
+line-length = 120
+target-version = ["py311"]
+

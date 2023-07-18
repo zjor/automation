@@ -1,3 +1,6 @@
+# TODO: remove
 airtable==0.4.8
 pydantic==1.8.2
 apscheduler==3.9.1
+psycopg2==2.9.4
+sqlalchemy==1.4.41
