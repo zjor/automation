@@ -3,7 +3,10 @@ name: Send quote of the day
 on:
   push:
     paths:
-      - ./*.py
+      - .github/workflows/qotd.yaml
+      - send_potd.py
+      - send_qotd.py
+      - bot_sender.py
   workflow_dispatch:
   schedule:
     - cron: 13 08 * * *
