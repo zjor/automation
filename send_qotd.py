@@ -6,6 +6,10 @@ from bot_sender import send_message
 qotd_token = os.getenv("QOTD_TOKEN")
 
 def get_quote(category="inspire"):
+
+    if not qotd_token:
+        raise Exception("QOTD_TOKEN variable is not set")
+
     url = f"https://quotes.rest/qod.json?category={category}"
     
     headers = {

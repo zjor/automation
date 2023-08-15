@@ -1,6 +1,9 @@
 name: Send quote of the day
 
 on:
+  push:
+    paths:
+      - ./*.py
   workflow_dispatch:
   schedule:
     - cron: 13 08 * * *
