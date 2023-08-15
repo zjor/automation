@@ -14,11 +14,11 @@ on:
 env:
   TG_USER: ${{secrets.TG_USER}}
   TG_PASS: ${{secrets.TG_PASS}}
+  QOTD_TOKEN: ${{secrets.QOTD_TOKEN}}
 
 jobs:
   send-qotd:
     runs-on: ubuntu-latest
-    environment: actions
     steps:
       - uses: actions/checkout@v3
       - name: Install dependencies
