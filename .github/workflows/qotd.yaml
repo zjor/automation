@@ -1,6 +1,7 @@
 name: Send quote of the day
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: 13 08 * * *
 
