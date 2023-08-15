@@ -1,10 +1,19 @@
+import os
+import json
 import requests as req
 from bot_sender import send_message
 
+qotd_token = os.getenv("QOTD_TOKEN")
 
 def get_quote(category="inspire"):
     url = f"https://quotes.rest/qod.json?category={category}"
-    res = req.get(url).json()
+    
+    headers = {
+        "X-TheySaidSo-Api-Secret": qotd_token
+    }
+
+    res = req.get(url, headers=headers).json()
+    print(json.dumps(res, indent=2))
     res = res['contents']['quotes'][0]
     return res['quote'], res['author']
 
